@@ -9,15 +9,18 @@
 #include "DNA.h"
 #include "Nucleus.h"
 #include <iostream>
+
 Substance generateSubstance() {
     std::cout << "Generate substance" << std::endl;
     return Glucose();
 }
 
 int main() {
-    Cell cell = Cell();
+    Cell cell = Cell(10);
 
-    while (true) {
+    for (int i = 1; cell.getEnergy() < cell.REPRODUCTION_ENERGY_COST; i++) {
+        std::cout << i << " iteration:" << std::endl;
+        std::cout << "Origin energy: " << cell.getEnergy() << std::endl;
         cell.ribosome->generateProtein();
 
         Substance substance = generateSubstance();
@@ -26,14 +29,12 @@ int main() {
         } else {
             std::cout << "Good substance!" << std::endl;
         }
-        std::cout << "Count energy " << cell.getEnergy() << std::endl;
+        std::cout << "Count energy after generate protein: " << cell.getEnergy() << std::endl;
         cell.protein->transportSubstanceInMitochondrion(substance, cell.mitochondria);
         cell.mitochondria->generateEnergy();
-        std::cout << "Count energy " << cell.getEnergy() << std::endl;
+        std::cout << "Count energy after mitochondrion: " << cell.getEnergy() << std::endl;
 
-        if (cell.getEnergy() > 3) {
-            break;
-        }
+        std::cout << "-----------------------------------------------------" << std::endl;
     }
 
     cell.divide();

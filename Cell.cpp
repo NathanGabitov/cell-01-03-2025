@@ -1,7 +1,7 @@
 #include "Cell.h"
 #include <iostream>
 
-Cell::Cell() : energy(2) {
+Cell::Cell(int c_energy) : energy(c_energy) {
     mitochondria = new Mitochondria(this);
     ribosome = new Ribosome(this);
     nucleus = new Nucleus();
@@ -10,7 +10,7 @@ Cell::Cell() : energy(2) {
 }
 
 void Cell::divide() {
-    if (energy > 3) {
+    if (energy >= REPRODUCTION_ENERGY_COST) {
         std::cout << "Cell divided!" << std::endl;
     } else {
         std::cout << "Not enough energy" << std::endl;
